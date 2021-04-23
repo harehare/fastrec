@@ -1,0 +1,22 @@
+name: build
+on:
+    push:
+        branches:
+            - release
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout Repo
+              uses: actions/checkout@v2
+            - name: Setup Sbt and Build
+              uses: olafurpg/setup-scala@v10
+            - name: Run ScalaJs Build
+              run: sbt prod
+            - name: Deploy to Firebase
+              uses: w9jds/firebase-action@master
+              with:
+                  args: deploy --only hosting
+              env:
+                  FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+                  PROJECT_ID: ${{ secrets.FIREBASE_PROJECT }}

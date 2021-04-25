@@ -90,6 +90,9 @@ lazy val client = project
     ),
     webpackConfigFile in fullOptJS := Some(
       baseDirectory.value / "webpack" / "prod.webpack.config.js"
+    ),
+    webpackConfigFile in Test := Some(
+      baseDirectory.value / "webpack" / "common.webpack.config.js"
     )
   )
   .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin)
